@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Form from './ToDoForm'
 import ToDosList from './ToDo'
 import { v4 as uuidv4 } from 'uuid';
+import EditToDoForm from './EditToDoForm';
 uuidv4();
 
 
@@ -24,14 +25,30 @@ const ToDoWrapper = () => {
       )
     );
   }
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+  const editTodo = (id) => {
+    setTodos(todos.map(todo => todo.id === id ? {...
+    todo, isEditing: !todo.isEditing} : todo))
+  }
+  const editTask = (task, id) => {
+    setTodos(todos.map(todo => todo.id === id ? {...
+    todo, task, isEditing: !todo.isEditing}: todo))
+  }
+
   return (
     <div className='TodoWrapper'>
       <h1>Get Things Done</h1>
       <Form addTodo={addTodo}/>
 
       {todos.map((todo, index)=>(
-        <ToDosList task={todo} key={index} toggleComplete={toggleComplete}/>
-        ))
+        todo.isEditing ? (
+          <EditToDoForm editTodo={editTask} task={todo}/>
+        ) : (
+          <ToDosList task={todo} key={index} toggleComplete={toggleComplete} deletoTodo={deleteTodo} editTodo={editTodo}/>
+          ))
+        )
       }
     </div>
   )
