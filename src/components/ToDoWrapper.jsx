@@ -42,11 +42,11 @@ const ToDoWrapper = () => {
       <h1>Get Things Done</h1>
       <Form addTodo={addTodo}/>
 
-      {todos.map((todo, index)=>(
+      {todos.map((todo)=>(
         todo.isEditing ? (
           <EditToDoForm editTodo={editTask} task={todo}/>
         ) : (
-          <ToDosList task={todo} key={index} toggleComplete={toggleComplete} deletoTodo={deleteTodo} editTodo={editTodo}/>
+          <ToDosList key={todo.id}  task={todo} toggleComplete={toggleComplete} deleteTodo={deleteTodo} editTodo={editTodo}/>
           ))
         )
       }
